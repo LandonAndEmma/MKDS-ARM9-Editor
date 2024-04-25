@@ -1,0 +1,1 @@
+pyinstaller --onefile --windowed --hidden-import base64 --hidden-import io --hidden-import os --hidden-import re --hidden-import tkinter --hidden-import webbrowser --hidden-import PIL --hidden-import PIL.Image --hidden-import PIL.ImageTk mkds_arm9_editor.pyw
