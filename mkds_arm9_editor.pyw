@@ -374,7 +374,7 @@ def open_help():
 
 
 def open_repository():
-    webbrowser.open_new("https://github.com/LandonAndEmma/MKDS-ARM9-Music-Editor")
+    webbrowser.open_new("https://github.com/LandonAndEmma/MKDS-ARM9-Editor")
 
 
 def on_closing():
