@@ -369,11 +369,8 @@ def save_file_as():
 def open_help():
     messagebox.showinfo("Help",
                         "This program allows you to edit many values in the arm9.bin file of Mario Kart DS.\n\n"
-                        "1. To get started, go to File > Open and select the arm9.bin file you want to edit.\n\n"
-                        "2. Once the file is opened, click on a track in the list to change its SEQ ID.\n\n"
-                        "3. After making changes, go to File > Save to save the modified file.\n\n"
-                        "Original Code: Ermelber, Yami, MkDasher\n"
-                        "Fixed and made into a Python GUI app by Landon & Emma")
+                        "Code: Landon & Emma\n"
+                        "Special Thanks: Ermelber, Yami, MkDasher")
 
 
 def open_repository():
