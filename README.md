@@ -1,5 +1,5 @@
 ## Mario Kart DS ARM9 Editor
-
+<a href="https://github.com/XAMPPRocky/tokei"><img src="https://tokei.rs/b1/github/LandonAndEmma/MKDS-ARM9-Editor?category=code" alt="Lines of code"></a>
 ### Description
 The Mario Kart DS ARM9 Editor is a Python GUI tool designed to allow users to edit values within Mario Kart DS' `arm9.bin`. With this tool, you can enhancing your Mario Kart DS experience and make better ROM hacks.
 
