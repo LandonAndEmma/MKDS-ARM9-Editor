@@ -122,19 +122,19 @@ SLOT_OFFSETS = {
     "Flashing Camera Slot": 0x08BBC0,
 }
 EMBLEM_OFFSETS = {
-    "Mario": (0x165A8C, 0x165A8E),
-    "Yoshi": (0x165A90, 0x165A92),
-    "Bowser": (0x165A94, 0x165A96),
-    "Daisy": (0x165A98, 0x165A9A),
-    "Shy Guy": (0x165A9C, 0x165A9E),
-    "Donkey Kong": (0x165AA0, 0x165AA2),
-    "Toad": (0x165AA4, 0x165AA6),
-    "Waluigi": (0x165AA8, 0x165AAA),
-    "Wario": (0x165AAC, 0x165AAE),
-    "Dry Bones": (0x165AB0, 0x165AB2),
-    "Peach": (0x165AB4, 0x165AB6),
-    "R.O.B": (0x165AB8, 0x165ABA),
-    "Luigi": (0x165ABC, 0x165ABE),
+    "Mario": 0x165A8C,
+    "Yoshi": 0x165A90,
+    "Bowser": 0x165A94,
+    "Daisy": 0x165A98,
+    "Shy Guy": 0x165A9C,
+    "Donkey Kong": 0x165AA0,
+    "Toad": 0x165AA4,
+    "Waluigi": 0x165AA8,
+    "Wario": 0x165AAC,
+    "Dry Bones": 0x165AB0,
+    "Peach": 0x165AB4,
+    "R.O.B": 0x165AB8,
+    "Luigi": 0x165ABC,
 }
 ICON_BASE64 = """AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAzIxH/MyIQ/zIjEP8AAQEAAQAAAAABAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAQAAMyMR/zIjEP8yIhD/NykW/0Y6Lf96c2//e3Jv/3tzb/97c2//e3Nu/3tzb/97cm//enNu/3pzb/97c27/e3Nu/3pyb/9GOiz/NygX/0U6I/+GhID/xMTO/+vr7f/39vf/9/b2//b39//29/f/9/f2//f39//29/b/9/b3/+vr7f/Fxc7/h4SB/0U7Iv9KQyn/SkIp/5eUk/92bmf/JSVP/wEJe/8ZFUf/GRVG/xkURv8ZFEb/AQh6/yQlT/92b2f/l5WS/0pDKf9KQij/VlMt/2NjMP9iYzH/MSAQ/xkVR/8BAcb/SEjd/25v3f9ub9z/SUnc/wEBxv8ZFUf/MCEQ/2JiMf9jYjH/V1Is/1hSQP9nY1f/Z2NW/0tDJf8+Mh3/Fxfe/4eG5f9UVOf/VFXn/4eH5P8WF97/PzId/0pDJf9nYlf/ZmJX/1lTQP90dFv/dXRa/3R0W/9lYkT/ZWJF/y0xuP+Agff/gID2/4GB9/+Bgff/LTC5/2VjRP9lYkX/dHVb/3R1W/90dFv/AAEBAAABAAAAAAAAoKGh/52clP/Awcf/VkpB/1IgX/9TIV//VkpB/8HAxv+cnJT/oKCh/wAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAKKjqf+am57/vr++/3R+c/9LW2//Slpv/3R+cv++vr7/m5ue/6Ojqf8AAQAAAAABAAEAAQAAAAAAAAEAAAABAQDc3eD/3N3g/0tqnP9ERkf/TFlt/0xZbf9ERkf/S2qc/93d4f/d3eH/AAAAAAAAAAAAAAAAAAEAAAEBAAAAAQAAAAAAAAEAAABff6L/fp/M/2aIs/9niLP/hKnY/19+o/8AAAEAAAEAAAAAAAAAAAAAAAEAAAABAAAAAQAAAAEBAAABAQAAAAEADQ5h/4OjzP99fYD/fHyA/4KizP8NDmD/AAAAAAEBAAAAAQAAAAAAAAAAAQABAAAAAAEAAAAAAAABAQAAAAAAAAAEmP8NDmD/JC9u/yQvbv8MD2D/AAWY/wEAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAEBAAAAAQAAAQABAAAAAAAAAMv/AQC9/xYasf8XGrD/AQC9/wAAy/8AAAAAAAEAAAABAQAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAABAAAAAQABAERF7/+Tkuf/kpPn/0RF7/8AAAAAAAAAAAABAAAAAAAAAAEAAAAAAAABAAAAAQAAAAEBAAABAAEAAAAAAAEBAAAAAAAAWlv3/1ta9v8AAAEAAAEBAAABAAAAAAEAAAEAAAEAAAABAAEAH/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAHAADgBwAA4AcAAPgfAAD4HwAA+B8AAPgfAAD8PwAA/n8AAA=="""
 
@@ -209,6 +209,7 @@ def refresh_slot_listbox():
     listboxslot.delete(0, tk.END)
     for i, (slot, offset) in enumerate(SLOT_OFFSETS.items()):
         listboxslot.insert(tk.END, f"{i}) {slot} [{ARM_VALUES[offset]}]")
+
 
 def refresh_emblem_listbox():
     listboxemblem.delete(0, tk.END)
@@ -396,20 +397,20 @@ def open_emblem_popup():
     entry = tk.Entry(popup_window)
     entry.pack()
 
-    def change_slot_value():
+    def change_emblem_value():
         nonlocal popup_window
-        selected_item = listboxslot.get(listboxslot.curselection())
+        selected_item = listboxemblem.get(listboxemblem.curselection())
         selected_index = int(selected_item.split(")")[0])
-        slot_name = list(SLOT_OFFSETS.keys())[selected_index]
-        offset = SLOT_OFFSETS[slot_name]
+        emblem_name = list(EMBLEM_OFFSETS.keys())[selected_index]
+        offset = EMBLEM_OFFSETS[emblem_name]
         try:
             new_value = int(entry.get())
             if 0 < new_value < 55:
-                ARM_VALUES[offset] = new_value
-                refresh_slot_listbox()
+                EMBLEM_OFFSETS[offset] = new_value
+                refresh_emblem_listbox()
                 popup_window.destroy()
                 root.attributes("-disabled", False)
-                messagebox.showinfo("Success", f"course value for the {slot_name} changed to {new_value}")
+                messagebox.showinfo("Success", f"course value for the {emblem_name} changed to {new_value}")
             else:
                 popup_window.destroy()
                 root.attributes("-disabled", False)
@@ -419,14 +420,11 @@ def open_emblem_popup():
             root.attributes("-disabled", False)
             messagebox.showerror("Error", "Invalid course value. Value must be between 1 and 54.")
 
-    button = tk.Button(popup_window, text="Change course Value", command=change_slot_value)
+    button = tk.Button(popup_window, text="Change course Value", command=change_emblem_value)
     button.pack()
     cancel_button = tk.Button(popup_window, text="Cancel",
                               command=lambda: (popup_window.destroy(), root.attributes("-disabled", False)))
     cancel_button.pack()
-    course_help = tk.Label(popup_window,
-                           text="1 - GCN Yoshi Circuit\n2 - old_mario_gc\n3 - luigi_course\n4 - dokan_course\n5 - test1_course\n6 - donkey_course\n7 - wario_course\n8 - nokonoko_course\n9 - GCN Baby Park\n10 - SNES Mario Circuit 1\n11 - N64 Moo Mario Farm\n12 - GBA Bowser Castle 2\n13 - GBA Peach Circuit\n14 - GCN Luigi Circuit\n15 - SNES Koopa Beach 2\n16 - N64 Frappe Snowland (snow default)\n17 - Tick-Tock Clock\n18 - Luigi's Mansion\n19 - Airship Fortress\n20 - Figure-8 Circuit\n21 - test_circle\n22 - Yoshi Falls\n23 - N64 Banshee Boardwalk\n24 - Shroom Ridge\n25 - Mario Circuit\n26 - Peach Gardens\n27 - Desert Hills\n28 - Delfino Square\n29 - Rainbow Road\n30 - DK Pass\n31 - Cheep Cheep Beach\n32 - Bowser Castle\n33 - Waluigi Pinball\n34 - Wario Stadium (flashing lights default)\n35 - SNES Donut Plains 1\n36 - N64 Choco Mountain\n37 - GBA Luigi Circuit (rain default)\n38 - GCN Mushroom Bridge\n39 - SNES Choco Island 2\n40 - GBA Sky Garden\n41 - mini_block_course\n42 - Block Fort\n43 - Pipe Plaza\n44 - Nintendo DS\n45 - Twilight House\n46 - Palm Shore\n47 - Tart Top\n48 - mr_stage1\n49 - mr_stage2\n50 - mr_stage3\n51 - mr_stage4\n52 - Award\n53 - StaffRoll\n54 - StaffRollTrue")
-    course_help.pack()
 
     def close_popup_window():
         popup_window.destroy()
@@ -496,6 +494,7 @@ listboxslot = tk.Listbox(tab3)
 listboxslot.pack(fill=tk.BOTH, expand=True)
 listboxemblem = tk.Listbox(tab4)
 listboxemblem.pack(fill=tk.BOTH, expand=True)
+
 
 def on_listbox_music_select(event):
     selected_index = listboxmusic.curselection()
