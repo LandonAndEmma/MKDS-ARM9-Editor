@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1.csproj", "{4BC3C1EE-E5E1-4696-90BA-D619A9875207}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM9Editor", "ARM9Editor.csproj", "{4BC3C1EE-E5E1-4696-90BA-D619A9875207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

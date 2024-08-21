@@ -1,39 +1,141 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace ARM9Editor
 {
     public partial class App : Form
     {
+        private string arm9BinPath = null;
+        private byte[] armValues = null;
+        private Dictionary<string, int> musicOffsets;
+
         public App()
         {
             InitializeComponent();
             // Attach the Click event handlers
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             this.repositoryToolStripMenuItem.Click += new System.EventHandler(this.repositoryToolStripMenuItem_Click);
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
+            this.musiclistBox.DoubleClick += new System.EventHandler(this.musicListBox_DoubleClick);
+
+            LoadMusicOffsets(); // Initialize music offsets on form load
         }
 
-        // Event handler for "Open" menu item
+        private void LoadMusicOffsets()
+        {
+            // Load the music_offsets.json file and deserialize it into a Dictionary
+            string jsonFilePath = "music_offsets.json";
+            if (File.Exists(jsonFilePath))
+            {
+                string jsonData = File.ReadAllText(jsonFilePath);
+                musicOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+            }
+            else
+            {
+                MessageBox.Show("Music offsets file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                // Set filter for .bin files
-                openFileDialog.Filter = "Binary files (*.bin)|*.bin";
-                openFileDialog.Title = "Open a Binary File";
+                Filter = "Binary files (*.bin)|*.bin",
+                Title = "Open a Binary File"
+            };
 
-                // Show the dialog and check if a file was selected
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                arm9BinPath = openFileDialog.FileName;
+
+                if (new FileInfo(arm9BinPath).Length == 0)
                 {
-                    // Get the selected file path
-                    string filePath = openFileDialog.FileName;
+                    MessageBox.Show("This is not a valid arm9.bin file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                    // Perform actions with the selected file path
-                    MessageBox.Show($"Selected file: {filePath}", "File Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                armValues = File.ReadAllBytes(arm9BinPath);
+                RefreshMusicListBox();
+            }
+        }
 
-                    // TODO: Add code to handle the selected file (e.g., load and process the file)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile(arm9BinPath);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                DefaultExt = "bin",
+                Filter = "Binary files (*.bin)|*.bin"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                SaveFile(saveFileDialog.FileName);
+            }
+        }
+
+        private void SaveFile(string filePath)
+        {
+            if (filePath == null || armValues == null)
+            {
+                MessageBox.Show("No file is opened to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                File.WriteAllBytes(filePath, armValues);
+                MessageBox.Show("Modified file saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save the file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RefreshMusicListBox()
+        {
+            musiclistBox.Items.Clear();
+            foreach (var kvp in musicOffsets)
+            {
+                string displayText = $"{kvp.Key} [{armValues[kvp.Value]}]";
+                musiclistBox.Items.Add(displayText);
+            }
+        }
+
+        private void musicListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (musiclistBox.SelectedItem != null)
+            {
+                string selectedItem = musiclistBox.SelectedItem.ToString();
+                string musicName = selectedItem.Split('[')[0].Trim();
+                int offset = musicOffsets[musicName];
+
+                using (var form = new ChangeSeqValueForm(armValues[offset]))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        int newSeqValue = form.NewSeqValue;
+                        if (newSeqValue >= 0 && newSeqValue <= 75)
+                        {
+                            armValues[offset] = (byte)newSeqValue;
+                            RefreshMusicListBox();
+                            MessageBox.Show($"SEQ value for {musicName} changed to {newSeqValue}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid SEQ value. Value must be between 0 and 75.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
         }
@@ -59,11 +161,32 @@ namespace WindowsFormsApp1
             }
         }
 
-        // Event handler for "Help" menu item
-        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        // Event handler for "Info" menu item
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Show a MessageBox with custom text
-            MessageBox.Show("This program allows you to edit many values in the arm9.bin file of Mario Kart DS.\n\n Code: Landon & Emma\n Special Thanks: Ermelber, Yami, MkDasher", "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("This program allows you to edit many values in the arm9.bin file of Mario Kart DS.\n\n Code: Landon & Emma\n Special Thanks: Ermelber, Yami, MkDasher", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+
+    // A new form to handle the SEQ value change
+    public class ChangeSeqValueForm : Form
+    {
+        public int NewSeqValue { get; private set; }
+        private TextBox inputTextBox;
+
+        public ChangeSeqValueForm(int currentValue)
+        {
+            Text = "Change SEQ Value";
+            inputTextBox = new TextBox { Text = currentValue.ToString() };
+            Controls.Add(inputTextBox);
+            var okButton = new Button { Text = "OK", DialogResult = DialogResult.OK };
+            var cancelButton = new Button { Text = "Cancel", DialogResult = DialogResult.Cancel };
+
+            okButton.Click += (sender, e) => NewSeqValue = int.Parse(inputTextBox.Text);
+
+            Controls.Add(okButton);
+            Controls.Add(cancelButton);
         }
     }
 }
