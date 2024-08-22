@@ -70,10 +70,19 @@
     <Compile Include="app.Designer.cs">
       <DependentUpon>app.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChangeSeqValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeSeqValueForm.Designer.cs">
+      <DependentUpon>ChangeSeqValueForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App.resx">
       <DependentUpon>app.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeSeqValueForm.resx">
+      <DependentUpon>ChangeSeqValueForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

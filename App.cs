@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using ARM9Editor;
 
 namespace ARM9Editor
 {
@@ -30,14 +31,14 @@ namespace ARM9Editor
         {
             // Load the music_offsets.json file and deserialize it into a Dictionary
             string jsonFilePath = "music_offsets.json";
-            if (File.Exists(jsonFilePath))
+            try
             {
                 string jsonData = File.ReadAllText(jsonFilePath);
                 musicOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Music offsets file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Failed to load music offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -85,9 +86,9 @@ namespace ARM9Editor
 
         private void SaveFile(string filePath)
         {
-            if (filePath == null || armValues == null)
+            if (string.IsNullOrEmpty(filePath) || armValues == null)
             {
-                MessageBox.Show("No file is opened to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No valid file is opened for saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -104,6 +105,12 @@ namespace ARM9Editor
 
         private void RefreshMusicListBox()
         {
+            if (musicOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Music offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             musiclistBox.Items.Clear();
             foreach (var kvp in musicOffsets)
             {
@@ -114,6 +121,12 @@ namespace ARM9Editor
 
         private void musicListBox_DoubleClick(object sender, EventArgs e)
         {
+            if (musicOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Music offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (musiclistBox.SelectedItem != null)
             {
                 string selectedItem = musiclistBox.SelectedItem.ToString();
@@ -139,6 +152,7 @@ namespace ARM9Editor
                 }
             }
         }
+
 
         // Event handler for "Repository" menu item
         private void repositoryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,27 +180,6 @@ namespace ARM9Editor
         {
             // Show a MessageBox with custom text
             MessageBox.Show("This program allows you to edit many values in the arm9.bin file of Mario Kart DS.\n\n Code: Landon & Emma\n Special Thanks: Ermelber, Yami, MkDasher", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-    }
-
-    // A new form to handle the SEQ value change
-    public class ChangeSeqValueForm : Form
-    {
-        public int NewSeqValue { get; private set; }
-        private TextBox inputTextBox;
-
-        public ChangeSeqValueForm(int currentValue)
-        {
-            Text = "Change SEQ Value";
-            inputTextBox = new TextBox { Text = currentValue.ToString() };
-            Controls.Add(inputTextBox);
-            var okButton = new Button { Text = "OK", DialogResult = DialogResult.OK };
-            var cancelButton = new Button { Text = "Cancel", DialogResult = DialogResult.Cancel };
-
-            okButton.Click += (sender, e) => NewSeqValue = int.Parse(inputTextBox.Text);
-
-            Controls.Add(okButton);
-            Controls.Add(cancelButton);
         }
     }
 }
