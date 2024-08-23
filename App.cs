@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
-using ARM9Editor;
 
 namespace ARM9Editor
 {
@@ -29,12 +29,18 @@ namespace ARM9Editor
 
         private void LoadMusicOffsets()
         {
-            // Load the music_offsets.json file and deserialize it into a Dictionary
-            string jsonFilePath = "music_offsets.json";
+            // Load the music_offsets.json file embedded as a resource
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ARM9Editor.music_offsets.json"; // Replace with your correct namespace and file name
+
             try
             {
-                string jsonData = File.ReadAllText(jsonFilePath);
-                musicOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string jsonData = reader.ReadToEnd();
+                    musicOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+                }
             }
             catch (Exception ex)
             {
