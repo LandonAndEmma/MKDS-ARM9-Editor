@@ -6,7 +6,6 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -19,9 +18,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -57,10 +54,11 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.courselistBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 400);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Size = new System.Drawing.Size(1059, 497);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Course Filenames";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -69,18 +67,21 @@
             // 
             this.courselistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.courselistBox.FormattingEnabled = true;
-            this.courselistBox.Location = new System.Drawing.Point(3, 3);
+            this.courselistBox.ItemHeight = 16;
+            this.courselistBox.Location = new System.Drawing.Point(4, 4);
+            this.courselistBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.courselistBox.Name = "courselistBox";
-            this.courselistBox.Size = new System.Drawing.Size(786, 394);
+            this.courselistBox.Size = new System.Drawing.Size(1051, 489);
             this.courselistBox.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.musiclistBox);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 400);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1059, 497);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Music IDs";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -89,9 +90,11 @@
             // 
             this.musiclistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.musiclistBox.FormattingEnabled = true;
-            this.musiclistBox.Location = new System.Drawing.Point(3, 3);
+            this.musiclistBox.ItemHeight = 16;
+            this.musiclistBox.Location = new System.Drawing.Point(4, 4);
+            this.musiclistBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.musiclistBox.Name = "musiclistBox";
-            this.musiclistBox.Size = new System.Drawing.Size(786, 394);
+            this.musiclistBox.Size = new System.Drawing.Size(1051, 489);
             this.musiclistBox.TabIndex = 0;
             // 
             // tabControl1
@@ -101,19 +104,21 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 24);
+            this.tabControl1.Location = new System.Drawing.Point(0, 28);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 426);
+            this.tabControl1.Size = new System.Drawing.Size(1067, 526);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.weatherlistBox);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(792, 400);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Size = new System.Drawing.Size(1059, 495);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Weather Slots";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -122,18 +127,21 @@
             // 
             this.weatherlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.weatherlistBox.FormattingEnabled = true;
-            this.weatherlistBox.Location = new System.Drawing.Point(3, 3);
+            this.weatherlistBox.ItemHeight = 16;
+            this.weatherlistBox.Location = new System.Drawing.Point(4, 4);
+            this.weatherlistBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.weatherlistBox.Name = "weatherlistBox";
-            this.weatherlistBox.Size = new System.Drawing.Size(786, 394);
+            this.weatherlistBox.Size = new System.Drawing.Size(1051, 487);
             this.weatherlistBox.TabIndex = 0;
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.emblemlistBox);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(792, 400);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Size = new System.Drawing.Size(1059, 495);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Emblem Filenames";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -142,19 +150,22 @@
             // 
             this.emblemlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.emblemlistBox.FormattingEnabled = true;
-            this.emblemlistBox.Location = new System.Drawing.Point(3, 3);
+            this.emblemlistBox.ItemHeight = 16;
+            this.emblemlistBox.Location = new System.Drawing.Point(4, 4);
+            this.emblemlistBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.emblemlistBox.Name = "emblemlistBox";
-            this.emblemlistBox.Size = new System.Drawing.Size(786, 394);
+            this.emblemlistBox.Size = new System.Drawing.Size(1051, 487);
             this.emblemlistBox.TabIndex = 0;
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1067, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -165,25 +176,25 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.saveAsToolStripMenuItem.Text = "Save As";
             // 
             // helpToolStripMenuItem
@@ -192,14 +203,14 @@
             this.infoToolStripMenuItem,
             this.repositoryToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.DoubleClickEnabled = true;
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.infoToolStripMenuItem.Text = "Info";
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
@@ -207,19 +218,20 @@
             // 
             this.repositoryToolStripMenuItem.CheckOnClick = true;
             this.repositoryToolStripMenuItem.Name = "repositoryToolStripMenuItem";
-            this.repositoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.repositoryToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.repositoryToolStripMenuItem.Text = "Repository";
             this.repositoryToolStripMenuItem.Click += new System.EventHandler(this.repositoryToolStripMenuItem_Click);
             // 
             // App
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "App";
             this.Text = "Mario Kart DS ARM9 Editor";
             this.tabPage2.ResumeLayout(false);
@@ -235,7 +247,6 @@
         }
 
         #endregion
-
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabControl tabControl1;

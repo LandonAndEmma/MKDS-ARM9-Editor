@@ -11,6 +11,7 @@ namespace ARM9Editor
         private string arm9BinPath = null;
         private byte[] armValues = null;
         private Dictionary<string, int> musicOffsets;
+        private Dictionary<string, Tuple<int, int>> courseOffsets;
         public App()
         {
             InitializeComponent();
@@ -20,7 +21,9 @@ namespace ARM9Editor
             this.repositoryToolStripMenuItem.Click += new System.EventHandler(this.repositoryToolStripMenuItem_Click);
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             this.musiclistBox.DoubleClick += new System.EventHandler(this.musicListBox_DoubleClick);
+            this.courselistBox.DoubleClick += new System.EventHandler(this.courseListBox_DoubleClick);
             LoadMusicOffsets();
+            LoadCourseOffsets();
         }
         private void LoadMusicOffsets()
         {
@@ -40,6 +43,46 @@ namespace ARM9Editor
                 MessageBox.Show($"Failed to load music offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LoadCourseOffsets()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ARM9Editor.course_offsets.json";
+            try
+            {
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string jsonData = reader.ReadToEnd();
+                    var tempOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int[]>>(jsonData);
+
+                    courseOffsets = new Dictionary<string, Tuple<int, int>>();
+
+                    foreach (var kvp in tempOffsets)
+                    {
+                        if (kvp.Value.Length == 2)
+                        {
+                            courseOffsets.Add(kvp.Key, new Tuple<int, int>(kvp.Value[0], kvp.Value[1]));
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Invalid offset data for course {kvp.Key}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load course offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private string GetFileName(int startOffset, int endOffset)
+        {
+            if (armValues == null || startOffset < 0 || endOffset > armValues.Length || startOffset >= endOffset)
+            {
+                return string.Empty;
+            }
+            return System.Text.Encoding.UTF8.GetString(armValues, startOffset, endOffset - startOffset).TrimEnd('\0');
+        }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -57,6 +100,7 @@ namespace ARM9Editor
                 }
                 armValues = File.ReadAllBytes(arm9BinPath);
                 RefreshMusicListBox();
+                RefreshCourseListBox();
             }
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -106,6 +150,20 @@ namespace ARM9Editor
                 musiclistBox.Items.Add(displayText);
             }
         }
+        private void RefreshCourseListBox()
+        {
+            if (courseOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Course offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            courselistBox.Items.Clear();
+            foreach (var kvp in courseOffsets)
+            {
+                string displayText = $"{kvp.Key} [{GetFileName(kvp.Value.Item1, kvp.Value.Item2)}]";
+                courselistBox.Items.Add(displayText);
+            }
+        }
         private void musicListBox_DoubleClick(object sender, EventArgs e)
         {
             if (musicOffsets == null || armValues == null)
@@ -133,6 +191,29 @@ namespace ARM9Editor
                         {
                             MessageBox.Show("Invalid SEQ value. Value must be between 0 and 75.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                    }
+                }
+            }
+        }
+        private void courseListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (courseOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Course offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (courselistBox.SelectedItem != null)
+            {
+                string selectedItem = courselistBox.SelectedItem.ToString();
+                string courseName = selectedItem.Split('[')[0].Trim();
+                var offsets = courseOffsets[courseName];
+
+                using (var form = new ChangeFileNameForm(armValues, offsets.Item1, offsets.Item2))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshCourseListBox();
+                        MessageBox.Show($"File name for {courseName} changed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

@@ -1,6 +1,5 @@
-﻿using System.Windows.Forms;  // Add this for Button, TextBox, DialogResult
-using System.ComponentModel; // Add this for IContainer
-
+﻿using System.Windows.Forms;
+using System.ComponentModel;
 namespace ARM9Editor
 {
     partial class ChangeSeqValueForm
@@ -9,7 +8,6 @@ namespace ARM9Editor
         private TextBox inputTextBox;
         private Button okButton;
         private Button cancelButton;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -18,7 +16,6 @@ namespace ARM9Editor
             }
             base.Dispose(disposing);
         }
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeSeqValueForm));
