@@ -98,13 +98,25 @@
     <Compile Include="ChangeFileNameForm.Designer.cs">
       <DependentUpon>ChangeFileNameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChangeSlotValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeSlotValueForm.Designer.cs">
+      <DependentUpon>ChangeSlotValueForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App.resx">
       <DependentUpon>app.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChangeFileNameForm.resx">
+      <DependentUpon>ChangeFileNameForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChangeSeqValueForm.resx">
       <DependentUpon>ChangeSeqValueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeSlotValueForm.resx">
+      <DependentUpon>ChangeSlotValueForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

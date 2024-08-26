@@ -12,6 +12,7 @@ namespace ARM9Editor
         private byte[] armValues = null;
         private Dictionary<string, int> musicOffsets;
         private Dictionary<string, Tuple<int, int>> courseOffsets;
+        private Dictionary<string, int> slotOffsets;
         public App()
         {
             InitializeComponent();
@@ -22,8 +23,10 @@ namespace ARM9Editor
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             this.musiclistBox.DoubleClick += new System.EventHandler(this.musicListBox_DoubleClick);
             this.courselistBox.DoubleClick += new System.EventHandler(this.courseListBox_DoubleClick);
+            this.weatherlistBox.DoubleClick += new System.EventHandler(this.weatherListBox_DoubleClick);
             LoadMusicOffsets();
             LoadCourseOffsets();
+            LoadSlotOffsets();
         }
         private void LoadMusicOffsets()
         {
@@ -75,6 +78,24 @@ namespace ARM9Editor
                 MessageBox.Show($"Failed to load course offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LoadSlotOffsets()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ARM9Editor.slot_offsets.json";
+            try
+            {
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string jsonData = reader.ReadToEnd();
+                    slotOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load slot offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private string GetFileName(int startOffset, int endOffset)
         {
             if (armValues == null || startOffset < 0 || endOffset > armValues.Length || startOffset >= endOffset)
@@ -101,6 +122,7 @@ namespace ARM9Editor
                 armValues = File.ReadAllBytes(arm9BinPath);
                 RefreshMusicListBox();
                 RefreshCourseListBox();
+                RefreshWeatherListBox();
             }
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,6 +186,21 @@ namespace ARM9Editor
                 courselistBox.Items.Add(displayText);
             }
         }
+        private void RefreshWeatherListBox()
+        {
+            if (slotOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Slot offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            weatherlistBox.Items.Clear();
+            foreach (var kvp in slotOffsets)
+            {
+                string displayText = $"{kvp.Key} [{armValues[kvp.Value]}]";
+                weatherlistBox.Items.Add(displayText);
+            }
+        }
+
         private void musicListBox_DoubleClick(object sender, EventArgs e)
         {
             if (musicOffsets == null || armValues == null)
@@ -218,6 +255,38 @@ namespace ARM9Editor
                 }
             }
         }
+        private void weatherListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (slotOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Slot offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (weatherlistBox.SelectedItem != null)
+            {
+                string selectedItem = weatherlistBox.SelectedItem.ToString();
+                string slotName = selectedItem.Split('[')[0].Trim();
+                int offset = slotOffsets[slotName];
+
+                using (var form = new ChangeSlotValueForm(armValues[offset]))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        int newSlotValue = form.NewSlotValue;
+                        if (newSlotValue >= 1 && newSlotValue <= 54) // Assuming valid range
+                        {
+                            armValues[offset] = (byte)newSlotValue;
+                            RefreshWeatherListBox();
+                            MessageBox.Show($"Slot value for {slotName} changed to {newSlotValue}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid slot value. Value must be between 1 and 54.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+        }
         private void repositoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string githubUrl = "https://github.com/LandonAndEmma/MKDS-ARM9-EDITOR-VS";
@@ -237,6 +306,11 @@ namespace ARM9Editor
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This program allows you to edit many values in the arm9.bin file of Mario Kart DS.\n\n Code: Landon & Emma\n Special Thanks: Ermelber, Yami, MkDasher", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void weatherlistBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

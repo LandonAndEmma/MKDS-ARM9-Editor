@@ -69,10 +69,9 @@ namespace ARM9Editor
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(196, 112);
             this.Name = "ChangeSeqValueForm";
-            this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Change SEQ Value";
-            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
