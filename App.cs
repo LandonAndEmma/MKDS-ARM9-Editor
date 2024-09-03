@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 namespace ARM9Editor
 {
@@ -13,6 +14,7 @@ namespace ARM9Editor
         private Dictionary<string, int> musicOffsets;
         private Dictionary<string, Tuple<int, int>> courseOffsets;
         private Dictionary<string, int> slotOffsets;
+        private Dictionary<string, int> emblemOffsets;
         public App()
         {
             InitializeComponent();
@@ -24,9 +26,11 @@ namespace ARM9Editor
             this.musiclistBox.DoubleClick += new System.EventHandler(this.musicListBox_DoubleClick);
             this.courselistBox.DoubleClick += new System.EventHandler(this.courseListBox_DoubleClick);
             this.weatherlistBox.DoubleClick += new System.EventHandler(this.weatherListBox_DoubleClick);
+            this.emblemlistBox.DoubleClick += new System.EventHandler(this.emblemListBox_DoubleClick);
             LoadMusicOffsets();
             LoadCourseOffsets();
             LoadSlotOffsets();
+            LoadEmblemOffsets();
         }
         private void LoadMusicOffsets()
         {
@@ -96,6 +100,24 @@ namespace ARM9Editor
                 MessageBox.Show($"Failed to load slot offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LoadEmblemOffsets()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ARM9Editor.emblem_offsets.json";
+            try
+            {
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string jsonData = reader.ReadToEnd();
+                    emblemOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load emblem offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private string GetFileName(int startOffset, int endOffset)
         {
             if (armValues == null || startOffset < 0 || endOffset > armValues.Length || startOffset >= endOffset)
@@ -123,6 +145,7 @@ namespace ARM9Editor
                 RefreshMusicListBox();
                 RefreshCourseListBox();
                 RefreshWeatherListBox();
+                RefreshEmblemListBox();
             }
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,7 +223,22 @@ namespace ARM9Editor
                 weatherlistBox.Items.Add(displayText);
             }
         }
-
+        private void RefreshEmblemListBox()
+        {
+            if (emblemOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Emblem offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            emblemlistBox.Items.Clear();
+            foreach (var kvp in emblemOffsets)
+            {
+                string emblemName = kvp.Key;
+                int offset = kvp.Value;
+                string emblemValue = Encoding.ASCII.GetString(armValues, offset, 2).TrimEnd('\0');
+                emblemlistBox.Items.Add($"{emblemName} [{emblemValue}]");
+            }
+        }
         private void musicListBox_DoubleClick(object sender, EventArgs e)
         {
             if (musicOffsets == null || armValues == null)
@@ -287,6 +325,29 @@ namespace ARM9Editor
                 }
             }
         }
+        private void emblemListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (emblemOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Emblem offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (emblemlistBox.SelectedItem != null)
+            {
+                string selectedItem = emblemlistBox.SelectedItem.ToString();
+                string emblemName = selectedItem.Split('[')[0].Trim();
+                int offset = emblemOffsets[emblemName];
+
+                using (var form = new ChangeEmblemPrefixForm(armValues, offset))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshEmblemListBox();
+                        MessageBox.Show($"Emblem name for {emblemName} changed to {form.NewEmblemName}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
         private void repositoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string githubUrl = "https://github.com/LandonAndEmma/MKDS-ARM9-EDITOR-VS";
@@ -306,11 +367,6 @@ namespace ARM9Editor
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This program allows you to edit many values in the arm9.bin file of Mario Kart DS.\n\n Code: Landon & Emma\n Special Thanks: Ermelber, Yami, MkDasher", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void weatherlistBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

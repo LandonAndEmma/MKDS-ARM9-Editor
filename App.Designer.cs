@@ -54,10 +54,11 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.courselistBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 401);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage2.Size = new System.Drawing.Size(925, 464);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Course Filenames";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -66,18 +67,21 @@
             // 
             this.courselistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.courselistBox.FormattingEnabled = true;
-            this.courselistBox.Location = new System.Drawing.Point(3, 3);
+            this.courselistBox.ItemHeight = 15;
+            this.courselistBox.Location = new System.Drawing.Point(4, 3);
+            this.courselistBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.courselistBox.Name = "courselistBox";
-            this.courselistBox.Size = new System.Drawing.Size(786, 395);
+            this.courselistBox.Size = new System.Drawing.Size(917, 458);
             this.courselistBox.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.musiclistBox);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 400);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage1.Size = new System.Drawing.Size(925, 467);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Music IDs";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -86,9 +90,11 @@
             // 
             this.musiclistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.musiclistBox.FormattingEnabled = true;
-            this.musiclistBox.Location = new System.Drawing.Point(3, 3);
+            this.musiclistBox.ItemHeight = 15;
+            this.musiclistBox.Location = new System.Drawing.Point(4, 3);
+            this.musiclistBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.musiclistBox.Name = "musiclistBox";
-            this.musiclistBox.Size = new System.Drawing.Size(786, 394);
+            this.musiclistBox.Size = new System.Drawing.Size(917, 461);
             this.musiclistBox.TabIndex = 0;
             // 
             // tabControl1
@@ -99,18 +105,20 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 426);
+            this.tabControl1.Size = new System.Drawing.Size(933, 495);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.weatherlistBox);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage3.Size = new System.Drawing.Size(792, 400);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage3.Size = new System.Drawing.Size(925, 464);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Weather Slots";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -119,19 +127,21 @@
             // 
             this.weatherlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.weatherlistBox.FormattingEnabled = true;
-            this.weatherlistBox.Location = new System.Drawing.Point(3, 3);
+            this.weatherlistBox.ItemHeight = 15;
+            this.weatherlistBox.Location = new System.Drawing.Point(4, 3);
+            this.weatherlistBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.weatherlistBox.Name = "weatherlistBox";
-            this.weatherlistBox.Size = new System.Drawing.Size(786, 394);
+            this.weatherlistBox.Size = new System.Drawing.Size(917, 458);
             this.weatherlistBox.TabIndex = 0;
-            this.weatherlistBox.SelectedIndexChanged += new System.EventHandler(this.weatherlistBox_SelectedIndexChanged);
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.emblemlistBox);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(792, 401);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage4.Size = new System.Drawing.Size(925, 467);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Emblem Filenames";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -140,9 +150,11 @@
             // 
             this.emblemlistBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.emblemlistBox.FormattingEnabled = true;
-            this.emblemlistBox.Location = new System.Drawing.Point(3, 3);
+            this.emblemlistBox.ItemHeight = 15;
+            this.emblemlistBox.Location = new System.Drawing.Point(4, 3);
+            this.emblemlistBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.emblemlistBox.Name = "emblemlistBox";
-            this.emblemlistBox.Size = new System.Drawing.Size(786, 395);
+            this.emblemlistBox.Size = new System.Drawing.Size(917, 461);
             this.emblemlistBox.TabIndex = 0;
             // 
             // menuStrip1
@@ -153,8 +165,8 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(933, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -213,13 +225,14 @@
             // 
             // App
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(933, 519);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "App";
             this.Text = "Mario Kart DS ARM9 Editor";
             this.tabPage2.ResumeLayout(false);
