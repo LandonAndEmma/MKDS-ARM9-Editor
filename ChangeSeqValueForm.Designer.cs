@@ -1,11 +1,12 @@
 ﻿using System.Windows.Forms;
 using System.ComponentModel;
+using System.Drawing;
 namespace ARM9Editor
 {
     partial class ChangeSeqValueForm
     {
         private IContainer components = null;
-        private TextBox inputTextBox;
+        private NumericUpDown inputNumericUpDown;
         private Button okButton;
         private Button cancelButton;
         protected override void Dispose(bool disposing)
@@ -18,63 +19,79 @@ namespace ARM9Editor
         }
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeSeqValueForm));
-            this.inputTextBox = new System.Windows.Forms.TextBox();
-            this.okButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeSeqValueForm));
+            okButton = new Button();
+            cancelButton = new Button();
+            inputNumericUpDown = new NumericUpDown();
+            ((ISupportInitialize)inputNumericUpDown).BeginInit();
+            SuspendLayout();
             // 
-            // inputTextBox
+            // inputNumericUpDown
             // 
-            this.inputTextBox.Location = new System.Drawing.Point(12, 12);
-            this.inputTextBox.Name = "inputTextBox";
-            this.inputTextBox.Size = new System.Drawing.Size(156, 20);
-            this.inputTextBox.TabIndex = 0;
+            inputNumericUpDown.Location = new Point(12, 12);
+            this.inputNumericUpDown.Maximum = new decimal(new int[] {
+            75,
+            0,
+            0,
+            0});
+            this.inputNumericUpDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            inputNumericUpDown.Name = "NumericUpDown";
+            inputNumericUpDown.Size = new Size(156, 27);
+            inputNumericUpDown.TabIndex = 0;
+            this.inputNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(12, 38);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 1;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            okButton.Location = new Point(12, 38);
+            okButton.Name = "okButton";
+            okButton.Size = new Size(75, 23);
+            okButton.TabIndex = 1;
+            okButton.Text = "OK";
+            okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new(this.okButton_Click);
             // 
             // cancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(93, 38);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 2;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.DialogResult = DialogResult.Cancel;
+            cancelButton.Location = new Point(93, 38);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 23);
+            cancelButton.TabIndex = 2;
+            cancelButton.Text = "Cancel";
+            cancelButton.UseVisualStyleBackColor = true;
             // 
             // ChangeSeqValueForm
             // 
-            this.AcceptButton = this.okButton;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(180, 73);
-            this.ControlBox = false;
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.inputTextBox);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(196, 112);
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(196, 112);
-            this.Name = "ChangeSeqValueForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Change SEQ Value";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = okButton;
+            AutoScaleMode = AutoScaleMode.None;
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            CancelButton = cancelButton;
+            ClientSize = new Size(178, 65);
+            ControlBox = false;
+            Controls.Add(inputNumericUpDown);
+            Controls.Add(cancelButton);
+            Controls.Add(okButton);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MaximumSize = new Size(196, 112);
+            MinimizeBox = false;
+            MinimumSize = new Size(196, 112);
+            Name = "ChangeSeqValueForm";
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Change SEQ Value";
+            ((ISupportInitialize)inputNumericUpDown).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
     }
 }

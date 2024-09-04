@@ -10,12 +10,12 @@ namespace ARM9Editor
         public ChangeSlotValueForm(int currentValue)
         {
             InitializeComponent();
-            slotValueNumericUpDown.Value = currentValue;
+            inputNumericUpDown.Value = currentValue;
         }
 
         private void changeSlotValueButton_Click(object sender, EventArgs e)
         {
-            int newValue = (int)slotValueNumericUpDown.Value;
+            int newValue = (int)inputNumericUpDown.Value;
             if (newValue >= 1 && newValue <= 54)
             {
                 NewSlotValue = newValue;

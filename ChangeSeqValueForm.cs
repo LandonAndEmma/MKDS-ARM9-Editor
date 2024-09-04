@@ -8,11 +8,11 @@ namespace ARM9Editor
         public ChangeSeqValueForm(int currentValue)
         {
             InitializeComponent();
-            inputTextBox.Text = currentValue.ToString();
+            inputNumericUpDown.Text = currentValue.ToString();
         }
         private void okButton_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(inputTextBox.Text, out int result))
+            if (int.TryParse(inputNumericUpDown.Text, out int result))
             {
                 NewSeqValue = result;
                 this.DialogResult = DialogResult.OK;
