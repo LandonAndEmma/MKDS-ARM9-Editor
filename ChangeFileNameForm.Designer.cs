@@ -1,87 +1,91 @@
 ﻿using System.Windows.Forms;
+using System.ComponentModel;
+using System.Drawing;
 namespace ARM9Editor
 {
     partial class ChangeFileNameForm
-	{
-		private System.ComponentModel.IContainer components = null;
-		private TextBox currentFileNameTextBox;
-		private TextBox newFileNameTextBox;
-		private Button okButton;
-		private Button cancelButton;
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-		private void InitializeComponent()
-		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeFileNameForm));
-            this.currentFileNameTextBox = new System.Windows.Forms.TextBox();
-            this.newFileNameTextBox = new System.Windows.Forms.TextBox();
-            this.okButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+    {
+        private IContainer components = null;
+        private TextBox currentFileNameTextBox;
+        private TextBox newFileNameTextBox;
+        private Button okButton;
+        private Button cancelButton;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        private void InitializeComponent()
+        {
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeFileNameForm));
+            currentFileNameTextBox = new TextBox();
+            newFileNameTextBox = new TextBox();
+            okButton = new Button();
+            cancelButton = new Button();
+            SuspendLayout();
             // 
             // currentFileNameTextBox
             // 
-            this.currentFileNameTextBox.Location = new System.Drawing.Point(12, 12);
-            this.currentFileNameTextBox.Name = "currentFileNameTextBox";
-            this.currentFileNameTextBox.ReadOnly = true;
-            this.currentFileNameTextBox.Size = new System.Drawing.Size(260, 20);
-            this.currentFileNameTextBox.TabIndex = 0;
+            currentFileNameTextBox.Location = new Point(12, 12);
+            currentFileNameTextBox.Name = "currentFileNameTextBox";
+            currentFileNameTextBox.ReadOnly = true;
+            currentFileNameTextBox.Size = new Size(156, 27);
+            currentFileNameTextBox.TabIndex = 0;
             // 
             // newFileNameTextBox
             // 
-            this.newFileNameTextBox.Location = new System.Drawing.Point(12, 38);
-            this.newFileNameTextBox.Name = "newFileNameTextBox";
-            this.newFileNameTextBox.Size = new System.Drawing.Size(260, 20);
-            this.newFileNameTextBox.TabIndex = 1;
+            newFileNameTextBox.Location = new Point(12, 45);
+            newFileNameTextBox.Name = "newFileNameTextBox";
+            newFileNameTextBox.Size = new Size(156, 27);
+            newFileNameTextBox.TabIndex = 1;
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(116, 64);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 2;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+            okButton.Location = new Point(12, 82);
+            okButton.Name = "okButton";
+            okButton.Size = new Size(75, 23);
+            okButton.TabIndex = 2;
+            okButton.Text = "OK";
+            okButton.UseVisualStyleBackColor = true;
+            okButton.Click += new(okButton_Click);
             // 
             // cancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(197, 64);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.DialogResult = DialogResult.Cancel;
+            cancelButton.Location = new Point(93, 82);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 23);
+            cancelButton.TabIndex = 3;
+            cancelButton.Text = "Cancel";
+            cancelButton.UseVisualStyleBackColor = true;
             // 
             // ChangeFileNameForm
             // 
-            this.AcceptButton = this.okButton;
-            this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(284, 99);
-            this.ControlBox = false;
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.newFileNameTextBox);
-            this.Controls.Add(this.currentFileNameTextBox);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(300, 138);
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(300, 138);
-            this.Name = "ChangeFileNameForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Change File Name";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
-		}
-	}
+            AcceptButton = okButton;
+            AutoScaleMode = AutoScaleMode.None;
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            CancelButton = cancelButton;
+            ClientSize = new Size(196, 156);
+            ControlBox = false;
+            Controls.Add(newFileNameTextBox);
+            Controls.Add(currentFileNameTextBox);
+            Controls.Add(cancelButton);
+            Controls.Add(okButton);
+            Icon = (Icon)resources.GetObject("$Icon");
+            MaximizeBox = false;
+            MaximumSize = new Size(196, 156);
+            MinimizeBox = false;
+            MinimumSize = new Size(196, 156);
+            Name = "ChangeFileNameForm";
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Change File Name";
+            ResumeLayout(false);
+            PerformLayout();
+        }
+    }
 }

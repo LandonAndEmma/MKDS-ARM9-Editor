@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
@@ -7,28 +6,23 @@
     <AssemblyName>ARM9Editor</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ILMerge" Version="3.0.41" />
   </ItemGroup>
-
   <ItemGroup>
     <None Remove="course_offsets.json" />
     <None Remove="emblem_offsets.json" />
     <None Remove="music_offsets.json" />
     <None Remove="slot_offsets.json" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="course_offsets.json" />
     <EmbeddedResource Include="emblem_offsets.json" />
     <EmbeddedResource Include="music_offsets.json" />
     <EmbeddedResource Include="slot_offsets.json" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="Icon.ico" />
   </ItemGroup>
-
 </Project>

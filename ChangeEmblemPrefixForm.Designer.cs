@@ -1,9 +1,11 @@
 ﻿using System.Windows.Forms;
+using System.Drawing;
+using System.ComponentModel;
 namespace ARM9Editor
 {
     partial class ChangeEmblemPrefixForm : Form
     {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -14,43 +16,43 @@ namespace ARM9Editor
         }
         private void InitializeComponent()
         {
-            this.emblemNameTextBox = new System.Windows.Forms.TextBox();
-            this.changeButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            emblemNameTextBox = new TextBox();
+            changeButton = new Button();
+            SuspendLayout();
             // 
             // emblemNameTextBox
             // 
-            this.emblemNameTextBox.Location = new System.Drawing.Point(12, 12);
-            this.emblemNameTextBox.MaxLength = 2;
-            this.emblemNameTextBox.Name = "emblemNameTextBox";
-            this.emblemNameTextBox.Size = new System.Drawing.Size(100, 22);
-            this.emblemNameTextBox.TabIndex = 0;
+            emblemNameTextBox.Location = new Point(12, 12);
+            emblemNameTextBox.MaxLength = 2;
+            emblemNameTextBox.Name = "emblemNameTextBox";
+            emblemNameTextBox.Size = new Size(100, 22);
+            emblemNameTextBox.TabIndex = 0;
             // 
             // changeButton
             // 
-            this.changeButton.Location = new System.Drawing.Point(118, 10);
-            this.changeButton.Name = "changeButton";
-            this.changeButton.Size = new System.Drawing.Size(75, 23);
-            this.changeButton.TabIndex = 1;
-            this.changeButton.Text = "Change";
-            this.changeButton.UseVisualStyleBackColor = true;
-            this.changeButton.Click += new System.EventHandler(this.changeButton_Click);
+            changeButton.Location = new Point(118, 10);
+            changeButton.Name = "changeButton";
+            changeButton.Size = new Size(75, 23);
+            changeButton.TabIndex = 1;
+            changeButton.Text = "Change";
+            changeButton.UseVisualStyleBackColor = true;
+            changeButton.Click += new (this.changeButton_Click);
             // 
             // ChangeEmblemForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(205, 45);
-            this.Controls.Add(this.changeButton);
-            this.Controls.Add(this.emblemNameTextBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "ChangeEmblemForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Change Emblem Name";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(8F, 16F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(205, 45);
+            Controls.Add(changeButton);
+            Controls.Add(emblemNameTextBox);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Name = "ChangeEmblemForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Change Emblem Name";
+            ResumeLayout(false);
+            PerformLayout();
         }
-        private System.Windows.Forms.TextBox emblemNameTextBox;
-        private System.Windows.Forms.Button changeButton;
+        private TextBox emblemNameTextBox;
+        private Button changeButton;
     }
 }

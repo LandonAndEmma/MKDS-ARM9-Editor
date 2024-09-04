@@ -7,7 +7,7 @@ namespace ARM9Editor
     {
         private IContainer components = null;
         private NumericUpDown inputNumericUpDown;
-        private Button changeSlotValueButton;
+        private Button okButton;
         private Button cancelButton;
         protected override void Dispose(bool disposing)
         {
@@ -20,73 +20,78 @@ namespace ARM9Editor
         private void InitializeComponent()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeSlotValueForm));
-            this.inputNumericUpDown = new NumericUpDown();
-            this.changeSlotValueButton = new Button();
-            this.cancelButton = new Button();
-            ((ISupportInitialize)(this.inputNumericUpDown)).BeginInit();
-            this.SuspendLayout();
+            inputNumericUpDown = new NumericUpDown();
+            okButton = new Button();
+            cancelButton = new Button();
+            ((ISupportInitialize)inputNumericUpDown).BeginInit();
+            SuspendLayout();
             // 
             // inputNumericUpDown
             // 
-            this.inputNumericUpDown.Location = new Point(30, 30);
-            this.inputNumericUpDown.Maximum = new decimal(new int[] {
+            inputNumericUpDown.Location = new Point(12, 12);
+            inputNumericUpDown.Maximum = new decimal(new int[] {
             54,
             0,
             0,
             0});
-            this.inputNumericUpDown.Minimum = new decimal(new int[] {
+            inputNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.inputNumericUpDown.Name = "inputNumericUpDown";
-            this.inputNumericUpDown.Size = new Size(120, 20);
-            this.inputNumericUpDown.TabIndex = 0;
-            this.inputNumericUpDown.Value = new decimal(new int[] {
+            inputNumericUpDown.Name = "NumericUpDown";
+            inputNumericUpDown.Size = new Size(156, 27);
+            inputNumericUpDown.TabIndex = 0;
+            inputNumericUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
-            // changeSlotValueButton
+            // okButton
             // 
-            this.changeSlotValueButton.Location = new Point(30, 70);
-            this.changeSlotValueButton.Name = "changeSlotValueButton";
-            this.changeSlotValueButton.Size = new Size(120, 30);
-            this.changeSlotValueButton.TabIndex = 1;
-            this.changeSlotValueButton.Text = "Change Value";
-            this.changeSlotValueButton.UseVisualStyleBackColor = true;
-            this.changeSlotValueButton.Click += new (this.changeSlotValueButton_Click);
+            okButton.Location = new Point(12, 38);
+            okButton.Name = "okButton";
+            okButton.Size = new Size(75, 23);
+            okButton.TabIndex = 1;
+            okButton.Text = "OK";
+            okButton.UseVisualStyleBackColor = true;
+            okButton.Click += new(okButton_Click);
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new Point(30, 110);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new Size(120, 30);
-            this.cancelButton.TabIndex = 2;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new (this.cancelButton_Click);
+            cancelButton.DialogResult = DialogResult.Cancel;
+            cancelButton.Location = new Point(93, 38);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 23);
+            cancelButton.TabIndex = 2;
+            cancelButton.Text = "Cancel";
+            cancelButton.UseVisualStyleBackColor = true;
             // 
             // ChangeSlotValueForm
             // 
-            this.ClientSize = new Size(180, 160);
-            this.ControlBox = false;
-            this.Controls.Add(this.inputNumericUpDown);
-            this.Controls.Add(this.changeSlotValueButton);
-            this.Controls.Add(this.cancelButton);
-            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MaximumSize = new Size(196, 199);
-            this.MinimizeBox = false;
-            this.MinimumSize = new Size(196, 199);
-            this.Name = "ChangeSlotValueForm";
-            this.SizeGripStyle = SizeGripStyle.Hide;
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.Text = "Change Slot Value";
-            ((ISupportInitialize)(this.inputNumericUpDown)).EndInit();
-            this.ResumeLayout(false);
-
+            AcceptButton = okButton;
+            AutoScaleMode = AutoScaleMode.None;
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            CancelButton = cancelButton;
+            ClientSize = new Size(178, 65);
+            ControlBox = false;
+            Controls.Add(inputNumericUpDown);
+            Controls.Add(okButton);
+            Controls.Add(cancelButton);
+            Icon = (Icon)resources.GetObject("$Icon");
+            MaximizeBox = false;
+            MaximumSize = new Size(196, 112);
+            MinimizeBox = false;
+            MinimumSize = new Size(196, 112);
+            Name = "ChangeSlotValueForm";
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Change Slot Value";
+            ((ISupportInitialize)inputNumericUpDown).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
     }
 }

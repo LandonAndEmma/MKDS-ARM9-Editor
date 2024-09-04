@@ -9,14 +9,12 @@ namespace ARM9Editor
 		public string NewEmblemName { get; private set; }
 		private int emblemOffset;
 		private byte[] armValues;
-
 		public ChangeEmblemPrefixForm(byte[] armValues, int emblemOffset)
 		{
 			InitializeComponent();
 			this.armValues = armValues;
 			this.emblemOffset = emblemOffset;
 		}
-
 		private void changeButton_Click(object sender, EventArgs e)
 		{
 			string newName = emblemNameTextBox.Text;
@@ -31,7 +29,6 @@ namespace ARM9Editor
 				MessageBox.Show("Invalid name. Please use exactly 2 characters with letters, numbers, or underscores.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-
 			byte[] newNameBytes = Encoding.ASCII.GetBytes(newName.PadRight(2, '\0'));
 			Array.Copy(newNameBytes, 0, armValues, emblemOffset, newNameBytes.Length);
 			NewEmblemName = newName;
