@@ -5,10 +5,20 @@
     <RootNamespace>ARM9Editor</RootNamespace>
     <AssemblyName>ARM9Editor</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <PublishSingleFile>true</PublishSingleFile>
+	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="ILMerge" Version="3.0.41" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="course_offsets.json" />
@@ -21,8 +31,5 @@
     <EmbeddedResource Include="emblem_offsets.json" />
     <EmbeddedResource Include="music_offsets.json" />
     <EmbeddedResource Include="slot_offsets.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Icon.ico" />
   </ItemGroup>
 </Project>

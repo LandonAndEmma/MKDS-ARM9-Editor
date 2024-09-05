@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 namespace ARM9Editor
 {
     public partial class App : Form
@@ -18,15 +19,15 @@ namespace ARM9Editor
         public App()
         {
             InitializeComponent();
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
-            this.repositoryToolStripMenuItem.Click += new System.EventHandler(this.repositoryToolStripMenuItem_Click);
-            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
-            this.musiclistBox.DoubleClick += new System.EventHandler(this.musicListBox_DoubleClick);
-            this.courselistBox.DoubleClick += new System.EventHandler(this.courseListBox_DoubleClick);
-            this.weatherlistBox.DoubleClick += new System.EventHandler(this.weatherListBox_DoubleClick);
-            this.emblemlistBox.DoubleClick += new System.EventHandler(this.emblemListBox_DoubleClick);
+            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+            saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
+            repositoryToolStripMenuItem.Click += repositoryToolStripMenuItem_Click;
+            infoToolStripMenuItem.Click += infoToolStripMenuItem_Click;
+            musiclistBox.DoubleClick += musicListBox_DoubleClick;
+            courselistBox.DoubleClick += courseListBox_DoubleClick;
+            weatherlistBox.DoubleClick += weatherListBox_DoubleClick;
+            emblemlistBox.DoubleClick += emblemListBox_DoubleClick;
             LoadMusicOffsets();
             LoadCourseOffsets();
             LoadSlotOffsets();
@@ -38,12 +39,10 @@ namespace ARM9Editor
             var resourceName = "ARM9Editor.music_offsets.json";
             try
             {
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string jsonData = reader.ReadToEnd();
-                    musicOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
-                }
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                using var reader = new StreamReader(stream);
+                string jsonData = reader.ReadToEnd();
+                musicOffsets = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
             }
             catch (Exception ex)
             {
@@ -56,11 +55,11 @@ namespace ARM9Editor
             var resourceName = "ARM9Editor.course_offsets.json";
             try
             {
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                using (StreamReader reader = new StreamReader(stream))
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                using var reader = new StreamReader(stream);
+                string jsonData = reader.ReadToEnd();
                 {
-                    string jsonData = reader.ReadToEnd();
-                    var tempOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int[]>>(jsonData);
+                    var tempOffsets = JsonConvert.DeserializeObject<Dictionary<string, int[]>>(jsonData);
 
                     courseOffsets = new Dictionary<string, Tuple<int, int>>();
 
@@ -88,12 +87,10 @@ namespace ARM9Editor
             var resourceName = "ARM9Editor.slot_offsets.json";
             try
             {
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string jsonData = reader.ReadToEnd();
-                    slotOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
-                }
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                using var reader = new StreamReader(stream);
+                string jsonData = reader.ReadToEnd();
+                slotOffsets = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
             }
             catch (Exception ex)
             {
@@ -106,12 +103,10 @@ namespace ARM9Editor
             var resourceName = "ARM9Editor.emblem_offsets.json";
             try
             {
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string jsonData = reader.ReadToEnd();
-                    emblemOffsets = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
-                }
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                using var reader = new StreamReader(stream);
+                string jsonData = reader.ReadToEnd();
+                emblemOffsets = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
             }
             catch (Exception ex)
             {
@@ -124,11 +119,11 @@ namespace ARM9Editor
             {
                 return string.Empty;
             }
-            return System.Text.Encoding.UTF8.GetString(armValues, startOffset, endOffset - startOffset).TrimEnd('\0');
+            return Encoding.UTF8.GetString(armValues, startOffset, endOffset - startOffset).TrimEnd('\0');
         }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            var openFileDialog = new OpenFileDialog
             {
                 Filter = "Binary files (*.bin)|*.bin",
                 Title = "Open a Binary File"
@@ -154,7 +149,7 @@ namespace ARM9Editor
         }
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            var saveFileDialog = new SaveFileDialog
             {
                 DefaultExt = "bin",
                 Filter = "Binary files (*.bin)|*.bin"
@@ -251,7 +246,7 @@ namespace ARM9Editor
                 string selectedItem = musiclistBox.SelectedItem.ToString();
                 string musicName = selectedItem.Split('[')[0].Trim();
                 int offset = musicOffsets[musicName];
-                using (var form = new ChangeSeqValueForm(armValues[offset]))
+                using var form = new ChangeSeqValueForm(armValues[offset]);
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -283,7 +278,7 @@ namespace ARM9Editor
                 string courseName = selectedItem.Split('[')[0].Trim();
                 var offsets = courseOffsets[courseName];
 
-                using (var form = new ChangeFileNameForm(armValues, offsets.Item1, offsets.Item2))
+                using var form = new ChangeFileNameForm(armValues, offsets.Item1, offsets.Item2);
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -306,12 +301,12 @@ namespace ARM9Editor
                 string slotName = selectedItem.Split('[')[0].Trim();
                 int offset = slotOffsets[slotName];
 
-                using (var form = new ChangeSlotValueForm(armValues[offset]))
+                using var form = new ChangeSlotValueForm(armValues[offset]);
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
                         int newSlotValue = form.NewSlotValue;
-                        if (newSlotValue >= 1 && newSlotValue <= 54) // Assuming valid range
+                        if (newSlotValue >= 1 && newSlotValue <= 54)
                         {
                             armValues[offset] = (byte)newSlotValue;
                             RefreshWeatherListBox();
@@ -338,7 +333,7 @@ namespace ARM9Editor
                 string emblemName = selectedItem.Split('[')[0].Trim();
                 int offset = emblemOffsets[emblemName];
 
-                using (var form = new ChangeEmblemPrefixForm(armValues, offset))
+                using var form = new ChangeEmblemPrefixForm(armValues, offset);
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {

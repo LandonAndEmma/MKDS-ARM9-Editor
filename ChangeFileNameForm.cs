@@ -45,7 +45,7 @@ namespace ARM9Editor
             Array.Copy(newNameBytes, 0, armValues, nameOffset, newNameBytes.Length);
             for (int i = newNameBytes.Length; i < sizeOffset - nameOffset; i++)
             {
-                armValues[nameOffset + i] = 0x00; // Fill the remaining space with null bytes
+                armValues[nameOffset + i] = 0x00;
             }
             this.DialogResult = DialogResult.OK;
             this.Close();
