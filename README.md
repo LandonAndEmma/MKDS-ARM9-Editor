@@ -8,7 +8,7 @@ This tool uses stuff from: [ARM9 Music Editor](https://github.com/Ermelber/MKDS-
 ### Roadmap
 🔵 = Working on it, 🟢 = Will add soon, 🟡 = Will add later 🟠 = Might add
 
-🟢 Addition of changing internal file referenced file names of Characters, Karts, and Emblems.<br>
+🔵 Addition of changing internal file referenced file names of Characters, Karts, and Emblems.<br>
 🟠 .NDS file opening support.
 
 ### Contributing
