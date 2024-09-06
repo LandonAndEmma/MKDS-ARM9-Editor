@@ -21,15 +21,19 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="assets\json\course_offsets.json" />
+    <None Remove="assets\json\emblem_offsets.json" />
+    <None Remove="assets\json\music_offsets.json" />
+    <None Remove="assets\json\slot_offsets.json" />
     <None Remove="course_offsets.json" />
     <None Remove="emblem_offsets.json" />
     <None Remove="music_offsets.json" />
     <None Remove="slot_offsets.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="course_offsets.json" />
-    <EmbeddedResource Include="emblem_offsets.json" />
-    <EmbeddedResource Include="music_offsets.json" />
-    <EmbeddedResource Include="slot_offsets.json" />
+    <EmbeddedResource Include="assets\json\course_offsets.json" />
+    <EmbeddedResource Include="assets\json\emblem_offsets.json" />
+    <EmbeddedResource Include="assets\json\music_offsets.json" />
+    <EmbeddedResource Include="assets\json\slot_offsets.json" />
   </ItemGroup>
 </Project>

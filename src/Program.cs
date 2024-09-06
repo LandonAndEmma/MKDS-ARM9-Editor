@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-namespace ARM9Editor
+namespace ARM9Editor.src
 {
     static class Program
     {

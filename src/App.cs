@@ -36,7 +36,7 @@ namespace ARM9Editor
         private void LoadMusicOffsets()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "ARM9Editor.music_offsets.json";
+            var resourceName = "ARM9Editor.assets.json.music_offsets.json";
             try
             {
                 using var stream = assembly.GetManifestResourceStream(resourceName);
@@ -52,7 +52,7 @@ namespace ARM9Editor
         private void LoadCourseOffsets()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "ARM9Editor.course_offsets.json";
+            var resourceName = "ARM9Editor.assets.json.course_offsets.json";
             try
             {
                 using var stream = assembly.GetManifestResourceStream(resourceName);
@@ -84,7 +84,7 @@ namespace ARM9Editor
         private void LoadSlotOffsets()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "ARM9Editor.slot_offsets.json";
+            var resourceName = "ARM9Editor.assets.json.slot_offsets.json";
             try
             {
                 using var stream = assembly.GetManifestResourceStream(resourceName);
@@ -100,7 +100,7 @@ namespace ARM9Editor
         private void LoadEmblemOffsets()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "ARM9Editor.emblem_offsets.json";
+            var resourceName = "ARM9Editor.assets.json.emblem_offsets.json";
             try
             {
                 using var stream = assembly.GetManifestResourceStream(resourceName);
