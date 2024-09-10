@@ -16,6 +16,8 @@ namespace ARM9Editor
         private Dictionary<string, Tuple<int, int>> courseOffsets;
         private Dictionary<string, int> slotOffsets;
         private Dictionary<string, int> emblemOffsets;
+        private Dictionary<string, int> kartOffsets;
+        private Dictionary<string, int> characterOffsets;
         public App()
         {
             InitializeComponent();
@@ -28,10 +30,12 @@ namespace ARM9Editor
             courselistBox.DoubleClick += courseListBox_DoubleClick;
             weatherlistBox.DoubleClick += weatherListBox_DoubleClick;
             emblemlistBox.DoubleClick += emblemListBox_DoubleClick;
+            kartlistBox.DoubleClick += kartListBox_DoubleClick;
             LoadMusicOffsets();
             LoadCourseOffsets();
             LoadSlotOffsets();
             LoadEmblemOffsets();
+            LoadKartOffsets();
         }
         private void LoadMusicOffsets()
         {
@@ -113,6 +117,22 @@ namespace ARM9Editor
                 MessageBox.Show($"Failed to load emblem offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LoadKartOffsets()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ARM9Editor.assets.json.kart_offsets.json";
+            try
+            {
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                using var reader = new StreamReader(stream);
+                string jsonData = reader.ReadToEnd();
+                kartOffsets = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load kart offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private string GetFileName(int startOffset, int endOffset)
         {
             if (armValues == null || startOffset < 0 || endOffset > armValues.Length || startOffset >= endOffset)
@@ -141,6 +161,7 @@ namespace ARM9Editor
                 RefreshCourseListBox();
                 RefreshWeatherListBox();
                 RefreshEmblemListBox();
+                RefreshKartListBox();
             }
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,6 +253,22 @@ namespace ARM9Editor
                 int offset = kvp.Value;
                 string emblemValue = Encoding.ASCII.GetString(armValues, offset, 2).TrimEnd('\0');
                 emblemlistBox.Items.Add($"{emblemName} [{emblemValue}]");
+            }
+        }
+        private void RefreshKartListBox()
+        {
+            if (emblemOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Emblem offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            kartlistBox.Items.Clear();
+            foreach (var kvp in kartOffsets)
+            {
+                string kartName = kvp.Key;
+                int offset = kvp.Value;
+                string kartValue = Encoding.ASCII.GetString(armValues, offset, 4).TrimEnd('\0');
+                kartlistBox.Items.Add($"{kartName} [{kartValue}]");
             }
         }
         private void musicListBox_DoubleClick(object sender, EventArgs e)
@@ -339,6 +376,29 @@ namespace ARM9Editor
                     {
                         RefreshEmblemListBox();
                         MessageBox.Show($"Emblem name for {emblemName} changed to {form.NewEmblemName}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+        private void kartListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (kartOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Kart offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (kartlistBox.SelectedItem != null)
+            {
+                string selectedItem = kartlistBox.SelectedItem.ToString();
+                string kartName = selectedItem.Split('[')[0].Trim();
+                int offset = kartOffsets[kartName];
+
+                using var form = new ChangeKartFileNameForm(armValues, offset);
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshKartListBox();
+                        MessageBox.Show($"Kart name for {kartName} changed to {form.NewKartName}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

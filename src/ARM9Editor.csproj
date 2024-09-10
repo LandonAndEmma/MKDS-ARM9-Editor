@@ -5,6 +5,8 @@
     <RootNamespace>ARM9Editor</RootNamespace>
     <AssemblyName>ARM9Editor</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
+	<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <PublishSingleFile>true</PublishSingleFile>
 	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
@@ -21,8 +23,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="assets\json\character_offsets.json" />
     <None Remove="assets\json\course_offsets.json" />
     <None Remove="assets\json\emblem_offsets.json" />
+    <None Remove="assets\json\kart_offsets.json" />
     <None Remove="assets\json\music_offsets.json" />
     <None Remove="assets\json\slot_offsets.json" />
     <None Remove="course_offsets.json" />
@@ -31,9 +35,16 @@
     <None Remove="slot_offsets.json" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="assets\json\character_offsets.json" />
     <EmbeddedResource Include="assets\json\course_offsets.json" />
     <EmbeddedResource Include="assets\json\emblem_offsets.json" />
+    <EmbeddedResource Include="assets\json\kart_offsets.json" />
     <EmbeddedResource Include="assets\json\music_offsets.json" />
     <EmbeddedResource Include="assets\json\slot_offsets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="forms\ChangeKartPrefixForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
