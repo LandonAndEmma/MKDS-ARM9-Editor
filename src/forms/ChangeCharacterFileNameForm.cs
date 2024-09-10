@@ -4,27 +4,27 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 namespace ARM9Editor
 {
-    public partial class ChangeKartFileNameForm : Form
+    public partial class ChangeCharacterFileNameForm : Form
     {
-        public string NewKartName { get; private set; }
-        private readonly int kartOffset;
+        public string NewCharacterName { get; private set; }
+        private readonly int characterOffset;
         private readonly byte[] armValues;
-        private string GetCurrentKartPrefix()
+        private string GetCurrentCharacterPrefix()
         {
-            byte[] kartBytes = new byte[4];
-            Array.Copy(armValues, kartOffset, kartBytes, 0, kartBytes.Length);
-            return Encoding.ASCII.GetString(kartBytes).TrimEnd('\0');
+            byte[] characterBytes = new byte[4];
+            Array.Copy(armValues, characterOffset, characterBytes, 0, characterBytes.Length);
+            return Encoding.ASCII.GetString(characterBytes).TrimEnd('\0');
         }
-        public ChangeKartFileNameForm(byte[] armValues, int kartOffset)
+        public ChangeCharacterFileNameForm(byte[] armValues, int characterOffset)
         {
             InitializeComponent();
             this.armValues = armValues;
-            this.kartOffset = kartOffset;
-            currentKartPrefixTextBox.Text = GetCurrentKartPrefix();
+            this.characterOffset = characterOffset;
+            currentCharacterPrefixTextBox.Text = GetCurrentCharacterPrefix();
         }
         private void okButton_Click(object sender, EventArgs e)
         {
-            string newName = newKartPrefixTextBox.Text;
+            string newName = newCharacterPrefixTextBox.Text;
             if (string.IsNullOrEmpty(newName))
             {
                 if (MessageBox.Show("You have made the new filename blank. Do you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
@@ -37,8 +37,8 @@ namespace ARM9Editor
                 return;
             }
             byte[] newNameBytes = Encoding.ASCII.GetBytes(newName.PadRight(4, '\0'));
-            Array.Copy(newNameBytes, 0, armValues, kartOffset, newNameBytes.Length);
-            NewKartName = newName;
+            Array.Copy(newNameBytes, 0, armValues, characterOffset, newNameBytes.Length);
+            NewCharacterName = newName;
             DialogResult = DialogResult.OK;
         }
     }

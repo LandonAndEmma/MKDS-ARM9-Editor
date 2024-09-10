@@ -43,6 +43,9 @@
     <EmbeddedResource Include="assets\json\slot_offsets.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="forms\ChangeCharacterFileNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="forms\ChangeKartPrefixForm.cs">
       <SubType>Form</SubType>
     </Compile>

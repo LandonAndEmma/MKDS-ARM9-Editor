@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 namespace ARM9Editor
 {
-    partial class ChangeFileNameForm
+    partial class ChangeCourseFileNameForm
     {
         private IContainer components = null;
         private TextBox currentFileNameTextBox;
@@ -20,7 +20,7 @@ namespace ARM9Editor
         }
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeFileNameForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeCourseFileNameForm));
             currentFileNameTextBox = new TextBox();
             newFileNameTextBox = new TextBox();
             okButton = new Button();

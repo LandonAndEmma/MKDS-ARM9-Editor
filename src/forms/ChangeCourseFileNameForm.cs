@@ -3,12 +3,12 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 namespace ARM9Editor
 {
-    public partial class ChangeFileNameForm : Form
+    public partial class ChangeCourseFileNameForm : Form
     {
         private int nameOffset;
         private int sizeOffset;
         private byte[] armValues;
-        public ChangeFileNameForm(byte[] armValues, int nameOffset, int sizeOffset)
+        public ChangeCourseFileNameForm(byte[] armValues, int nameOffset, int sizeOffset)
         {
             InitializeComponent();
             this.armValues = armValues;

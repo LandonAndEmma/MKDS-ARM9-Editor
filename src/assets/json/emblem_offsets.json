@@ -1,15 +1,15 @@
 {
-    "Mario": 1464972,
-    "Yoshi": 1464976,
-    "Bowser": 1464980,
-    "Daisy": 1464984,
-    "Shy Guy": 1464988,
-    "Donkey Kong": 1464992,
-    "Toad": 1464996,
-    "Waluigi": 1465000,
-    "Wario": 1465004,
-    "Dry Bones": 1465008,
-    "Peach": 1465012,
-    "R.O.B": 1465016,
-    "Luigi": 1465020
+  "Mario": 1464972,
+  "Luigi": 1465020,
+  "Peach": 1465012,
+  "Yoshi": 1464976,
+  "Toad": 1464996,
+  "Donkey Kong": 1464992,
+  "Wario": 1465004,
+  "Bowser": 1464980,
+  "Daisy": 1464984,
+  "Dry Bones": 1465008,
+  "Waluigi": 1465000,
+  "R.O.B": 1465016,
+  "Shy Guy": 1464988
 }

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 namespace ARM9Editor
 {
     public partial class App : Form
@@ -31,11 +31,13 @@ namespace ARM9Editor
             weatherlistBox.DoubleClick += weatherListBox_DoubleClick;
             emblemlistBox.DoubleClick += emblemListBox_DoubleClick;
             kartlistBox.DoubleClick += kartListBox_DoubleClick;
+            characterlistBox.DoubleClick += characterListBox_DoubleClick;
             LoadMusicOffsets();
             LoadCourseOffsets();
             LoadSlotOffsets();
             LoadEmblemOffsets();
             LoadKartOffsets();
+            LoadCharacterOffsets();
         }
         private void LoadMusicOffsets()
         {
@@ -133,6 +135,22 @@ namespace ARM9Editor
                 MessageBox.Show($"Failed to load kart offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LoadCharacterOffsets()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "ARM9Editor.assets.json.character_offsets.json";
+            try
+            {
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                using var reader = new StreamReader(stream);
+                string jsonData = reader.ReadToEnd();
+                characterOffsets = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load character offsets: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private string GetFileName(int startOffset, int endOffset)
         {
             if (armValues == null || startOffset < 0 || endOffset > armValues.Length || startOffset >= endOffset)
@@ -162,6 +180,7 @@ namespace ARM9Editor
                 RefreshWeatherListBox();
                 RefreshEmblemListBox();
                 RefreshKartListBox();
+                RefreshCharacterListBox();
             }
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -259,7 +278,7 @@ namespace ARM9Editor
         {
             if (emblemOffsets == null || armValues == null)
             {
-                MessageBox.Show("Emblem offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Kart offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             kartlistBox.Items.Clear();
@@ -269,6 +288,22 @@ namespace ARM9Editor
                 int offset = kvp.Value;
                 string kartValue = Encoding.ASCII.GetString(armValues, offset, 4).TrimEnd('\0');
                 kartlistBox.Items.Add($"{kartName} [{kartValue}]");
+            }
+        }
+        private void RefreshCharacterListBox()
+        {
+            if (characterOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Character offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            characterlistBox.Items.Clear();
+            foreach (var kvp in characterOffsets)
+            {
+                string characterName = kvp.Key;
+                int offset = kvp.Value;
+                string characterValue = Encoding.ASCII.GetString(armValues, offset, 4).TrimEnd('\0');
+                characterlistBox.Items.Add($"{characterName} [{characterValue}]");
             }
         }
         private void musicListBox_DoubleClick(object sender, EventArgs e)
@@ -315,7 +350,7 @@ namespace ARM9Editor
                 string courseName = selectedItem.Split('[')[0].Trim();
                 var offsets = courseOffsets[courseName];
 
-                using var form = new ChangeFileNameForm(armValues, offsets.Item1, offsets.Item2);
+                using var form = new ChangeCourseFileNameForm(armValues, offsets.Item1, offsets.Item2);
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -399,6 +434,29 @@ namespace ARM9Editor
                     {
                         RefreshKartListBox();
                         MessageBox.Show($"Kart name for {kartName} changed to {form.NewKartName}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+        private void characterListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (characterOffsets == null || armValues == null)
+            {
+                MessageBox.Show("Character offsets or ARM values are not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (characterlistBox.SelectedItem != null)
+            {
+                string selectedItem = characterlistBox.SelectedItem.ToString();
+                string characterName = selectedItem.Split('[')[0].Trim();
+                int offset = characterOffsets[characterName];
+
+                using var form = new ChangeCharacterFileNameForm(armValues, offset);
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshCharacterListBox();
+                        MessageBox.Show($"Character name for {characterName} changed to {form.NewCharacterName}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
