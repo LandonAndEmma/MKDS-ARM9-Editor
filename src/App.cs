@@ -463,7 +463,7 @@ namespace ARM9Editor
         }
         private void repositoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string githubUrl = "https://github.com/LandonAndEmma/MKDS-ARM9-EDITOR-VS";
+            string githubUrl = "https://github.com/LandonAndEmma/MKDS-ARM9-Editor";
             try
             {
                 Process.Start(new ProcessStartInfo
