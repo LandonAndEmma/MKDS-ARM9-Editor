@@ -8,6 +8,7 @@ This tool uses stuff from: [ARM9 Music Editor](https://github.com/Ermelber/MKDS-
 ### Roadmap
 🔵 = Working on it, 🟢 = Will add soon, 🟡 = Will add later 🟠 = Might add
 
+🟢 [Ability to change online Wi-Fi Track List.](https://web.archive.org/web/20060218010753/http://leo.rampen.ca/m3wiki/index.php/Mario_Kart_DS_Hidden_Tracks_Online)
 🟠 .NDS file opening support.
 
 ### Contributing
