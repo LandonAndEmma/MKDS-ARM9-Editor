@@ -5,22 +5,22 @@ namespace ARM9Editor
 {
     partial class ChangeCharacterFileNameForm
     {
-        private IContainer components = null;
-        private TextBox currentCharacterPrefixTextBox;
-        private TextBox newCharacterPrefixTextBox;
-        private Button okButton;
-        private Button cancelButton;
+        private IContainer? components = null;
+        private TextBox currentCharacterPrefixTextBox = null!;
+        private TextBox newCharacterPrefixTextBox = null!;
+        private Button okButton = null!;
+        private Button cancelButton = null!;
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeCharacterFileNameForm));
+            var resources = new ComponentResourceManager(typeof(ChangeCharacterFileNameForm));
             currentCharacterPrefixTextBox = new TextBox();
             newCharacterPrefixTextBox = new TextBox();
             okButton = new Button();
@@ -38,7 +38,7 @@ namespace ARM9Editor
             // newCharacterPrefixTextBox
             // 
             newCharacterPrefixTextBox.Location = new Point(12, 45);
-            newCharacterPrefixTextBox.Name = "newFileNameTextBox";
+            newCharacterPrefixTextBox.Name = "newCharacterPrefixTextBox";
             newCharacterPrefixTextBox.Size = new Size(156, 27);
             newCharacterPrefixTextBox.TabIndex = 1;
             // 
@@ -50,7 +50,7 @@ namespace ARM9Editor
             okButton.TabIndex = 2;
             okButton.Text = "OK";
             okButton.UseVisualStyleBackColor = true;
-            okButton.Click += new(okButton_Click);
+            okButton.Click += okButton_Click;
             // 
             // cancelButton
             // 
@@ -75,7 +75,7 @@ namespace ARM9Editor
             Controls.Add(currentCharacterPrefixTextBox);
             Controls.Add(cancelButton);
             Controls.Add(okButton);
-            Icon = (Icon)resources.GetObject("$Icon");
+            Icon = (Icon)resources.GetObject("$Icon")!;
             MaximizeBox = false;
             MaximumSize = new Size(196, 156);
             MinimizeBox = false;

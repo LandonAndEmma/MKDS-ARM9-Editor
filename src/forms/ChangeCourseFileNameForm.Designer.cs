@@ -5,22 +5,22 @@ namespace ARM9Editor
 {
     partial class ChangeCourseFileNameForm
     {
-        private IContainer components = null;
-        private TextBox currentFileNameTextBox;
-        private TextBox newFileNameTextBox;
-        private Button okButton;
-        private Button cancelButton;
+        private IContainer? components = null;
+        private TextBox currentFileNameTextBox = null!;
+        private TextBox newFileNameTextBox = null!;
+        private Button okButton = null!;
+        private Button cancelButton = null!;
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(ChangeCourseFileNameForm));
+            var resources = new ComponentResourceManager(typeof(ChangeCourseFileNameForm));
             currentFileNameTextBox = new TextBox();
             newFileNameTextBox = new TextBox();
             okButton = new Button();
@@ -50,7 +50,7 @@ namespace ARM9Editor
             okButton.TabIndex = 2;
             okButton.Text = "OK";
             okButton.UseVisualStyleBackColor = true;
-            okButton.Click += new(okButton_Click);
+            okButton.Click += okButton_Click;
             // 
             // cancelButton
             // 
@@ -62,7 +62,7 @@ namespace ARM9Editor
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
             // 
-            // ChangeFileNameForm
+            // ChangeCourseFileNameForm
             // 
             AcceptButton = okButton;
             AutoScaleMode = AutoScaleMode.None;
@@ -75,12 +75,12 @@ namespace ARM9Editor
             Controls.Add(currentFileNameTextBox);
             Controls.Add(cancelButton);
             Controls.Add(okButton);
-            Icon = (Icon)resources.GetObject("$Icon");
+            Icon = (Icon)resources.GetObject("$Icon")!;
             MaximizeBox = false;
             MaximumSize = new Size(196, 156);
             MinimizeBox = false;
             MinimumSize = new Size(196, 156);
-            Name = "ChangeFileNameForm";
+            Name = "ChangeCourseFileNameForm";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Change File Name";

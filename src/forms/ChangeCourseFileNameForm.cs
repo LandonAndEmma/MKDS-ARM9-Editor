@@ -1,54 +1,79 @@
-﻿using System;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 namespace ARM9Editor
 {
     public partial class ChangeCourseFileNameForm : Form
     {
-        private int nameOffset;
-        private int sizeOffset;
-        private byte[] armValues;
+        private readonly int _nameOffset;
+        private readonly int _sizeOffset;
+        private readonly byte[] _armValues;
         public ChangeCourseFileNameForm(byte[] armValues, int nameOffset, int sizeOffset)
         {
             InitializeComponent();
-            this.armValues = armValues;
-            this.nameOffset = nameOffset;
-            this.sizeOffset = sizeOffset;
+            _armValues = armValues ?? throw new ArgumentNullException(nameof(armValues));
+            _nameOffset = nameOffset;
+            _sizeOffset = sizeOffset;
             currentFileNameTextBox.Text = GetCurrentFileName();
         }
         private string GetCurrentFileName()
         {
-            byte[] nameBytes = new byte[sizeOffset - nameOffset];
-            Array.Copy(armValues, nameOffset, nameBytes, 0, nameBytes.Length);
-            return System.Text.Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
+            int length = _sizeOffset - _nameOffset;
+            if (length <= 0 || _nameOffset < 0 || _sizeOffset > _armValues.Length)
+            {
+                return string.Empty;
+            }
+            byte[] nameBytes = new byte[length];
+            Array.Copy(_armValues, _nameOffset, nameBytes, 0, length);
+            return Encoding.UTF8.GetString(nameBytes).TrimEnd('\0');
         }
-        private void okButton_Click(object sender, EventArgs e)
+        private void okButton_Click(object? sender, EventArgs e)
         {
             string newName = newFileNameTextBox.Text;
+            int maxLength = _sizeOffset - _nameOffset;
 
+            if (maxLength <= 0)
+            {
+                _ = MessageBox.Show("Invalid name block size.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (string.IsNullOrEmpty(newName))
             {
-                if (MessageBox.Show("You have made the new name blank. Do you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                DialogResult result = MessageBox.Show(
+                    "You have made the new name blank. Do you want to continue?",
+                    "Warning",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+                if (result == DialogResult.No)
+                {
                     return;
+                }
             }
             else if (!Regex.IsMatch(newName, @"^[A-Za-z0-9_]+$"))
             {
-                MessageBox.Show("Invalid characters detected. Please use only English letters, numbers, and underscores.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(
+                    "Invalid characters detected. Please use only English letters, numbers, and underscores.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
-            else if (newName.Length > (sizeOffset - nameOffset))
+            else if (Encoding.UTF8.GetByteCount(newName) > maxLength)
             {
-                MessageBox.Show($"New file name exceeds block size ({sizeOffset - nameOffset} bytes).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(
+                    $"New file name exceeds block size ({maxLength} bytes).",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
-            byte[] newNameBytes = System.Text.Encoding.UTF8.GetBytes(newName);
-            Array.Copy(newNameBytes, 0, armValues, nameOffset, newNameBytes.Length);
-            for (int i = newNameBytes.Length; i < sizeOffset - nameOffset; i++)
-            {
-                armValues[nameOffset + i] = 0x00;
-            }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            byte[] newNameBytes = Encoding.UTF8.GetBytes(newName);
+            Array.Copy(newNameBytes, 0, _armValues, _nameOffset, newNameBytes.Length);
+            Array.Clear(_armValues, _nameOffset + newNameBytes.Length, maxLength - newNameBytes.Length);
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }
