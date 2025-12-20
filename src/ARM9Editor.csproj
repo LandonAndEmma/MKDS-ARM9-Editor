@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ARM9Editor</RootNamespace>
     <AssemblyName>ARM9Editor</AssemblyName>
@@ -15,7 +15,7 @@
 	<SelfContained>false</SelfContained>
 	<PublishSingleFile>true</PublishSingleFile>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <StartupObject></StartupObject>
+    <StartupObject>ARM9Editor.Program</StartupObject>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
@@ -40,9 +40,7 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.3" />
-    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="assets\json\character_offsets.json" />
@@ -57,7 +55,9 @@
     <None Remove="slot_offsets.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico" />
+    <EmbeddedResource Include="Icon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="assets\json\character_offsets.json" />
@@ -68,15 +68,6 @@
     <EmbeddedResource Include="assets\json\slot_offsets.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="forms\ChangeCharacterFileNameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="forms\ChangeKartPrefixForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="forms\ChangeOnlineCourseIdForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
