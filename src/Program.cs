@@ -1,16 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ARM9Editor
+﻿using Avalonia;
+namespace ARM9Editor;
+internal static class Program
 {
-    internal static class Program
+    [STAThread]
+    public static void Main(string[] args)
     {
-        [STAThread]
-        [RequiresAssemblyFiles("Calls ARM9Editor.App.App()")]
-        private static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-        }
+        _ = BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+    }
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        return AppBuilder.Configure<App>().UsePlatformDetect().WithInterFont().LogToTrace();
     }
 }

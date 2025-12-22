@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:ARM9Editor"
+        x:Class="ARM9Editor.MainWindow"
+        x:DataType="local:MainWindowViewModel"
+        Title="{Binding Title}"
+        Width="1471"
+        Height="640"
+        MinWidth="1471"
+        MinHeight="480">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Click="OnOpenClick" />
+                <MenuItem Header="Save" Click="OnSaveClick" IsEnabled="{Binding IsFileLoaded}" />
+                <MenuItem Header="Save As..." Click="OnSaveAsClick" IsEnabled="{Binding IsFileLoaded}" />
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Info" Click="OnInfoClick" />
+                <MenuItem Header="Repository" Click="OnRepositoryClick" />
+            </MenuItem>
+        </Menu>
+        <Border DockPanel.Dock="Bottom"
+                Height="30"
+                BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource SystemControlBackgroundBaseLowBrush}">
+            <TextBlock Text="{Binding Status}"
+                       Margin="10,0"
+                       VerticalAlignment="Center" />
+        </Border>
+        <Panel>
+            <Border x:Name="WelcomePanel" IsVisible="{Binding !IsFileLoaded}">
+                <TextBlock Text="Welcome to Mario Kart DS ARM9 Editor.&#x0a;Please open an ARM9.bin file to begin editing."
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           FontSize="16" />
+            </Border>
+            <TabControl x:Name="MainTabControl" IsVisible="{Binding IsFileLoaded}" />
+        </Panel>
+    </DockPanel>
+</Window>
