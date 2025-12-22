@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 namespace ARM9Editor;
+
 public sealed class ConfigurationService
 {
     private static readonly Lazy<ConfigurationService> _instance = new(valueFactory: static () => new ConfigurationService());

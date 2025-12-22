@@ -1,9 +1,11 @@
 using Avalonia.Controls;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 namespace ARM9Editor;
+
 public sealed class MainWindowViewModel : INotifyPropertyChanged
 {
     private const string DefaultTitle = "Mario Kart DS ARM9 Editor";
@@ -11,6 +13,7 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
     private string? _filePath;
     public event PropertyChangedEventHandler? PropertyChanged;
     public Window? Owner { get; set; }
+    public Action? OnTabsNeedRefresh { get; set; }
     public ARM9Data Data { get; } = new();
     public bool IsFileLoaded => Data.IsLoaded;
     public string Status { get; private set => SetField(ref field, value); } = "Ready";
@@ -85,13 +88,66 @@ public sealed class MainWindowViewModel : INotifyPropertyChanged
             await DialogService.ShowErrorAsync(Owner, ex.Message);
         }
     }
+    [RequiresUnreferencedCode("Calls ARM9Editor.FileService.ExportChangesAsync")]
+    public async Task ExportChangesAsync()
+    {
+        if (!IsFileLoaded)
+        {
+            await DialogService.ShowErrorAsync(Owner, "No file loaded.");
+            return;
+        }
+        if (!Data.HasChanges())
+        {
+            await DialogService.ShowMessageAsync(Owner, "No Changes", "No changes have been made to export.");
+            return;
+        }
+        try
+        {
+            ChangesExport changes = Data.ExportChanges();
+            string? path = await FileService.ExportChangesAsync(Owner, changes);
+            if (!string.IsNullOrEmpty(path))
+            {
+                Status = $"Exported {changes.Changes.Count} change(s) to: {Path.GetFileName(path)}";
+                await DialogService.ShowMessageAsync(Owner, "Success", $"Successfully exported {changes.Changes.Count} change(s) to JSON.");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DialogService.ShowErrorAsync(Owner, ex.Message);
+        }
+    }
+    [RequiresUnreferencedCode("Calls ARM9Editor.FileService.ImportChangesAsync")]
+    public async Task ImportChangesAsync()
+    {
+        if (!IsFileLoaded)
+        {
+            await DialogService.ShowErrorAsync(Owner, "No file loaded.");
+            return;
+        }
+        try
+        {
+            ChangesExport? changes = await FileService.ImportChangesAsync(Owner);
+            if (changes == null)
+            {
+                return;
+            }
+            Data.ImportChanges(changes);
+            OnTabsNeedRefresh?.Invoke();
+            Status = $"Imported {changes.Changes.Count} change(s)";
+            await DialogService.ShowMessageAsync(Owner, "Success", $"Successfully imported {changes.Changes.Count} change(s).");
+        }
+        catch (Exception ex)
+        {
+            await DialogService.ShowErrorAsync(Owner, ex.Message);
+        }
+    }
     public async Task ShowInfoAsync()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         Version? version = assembly.GetName().Version;
-        var versionStr = version != null ? $"{version.Major}.{version.Minor}.{version.Build}" : "Unknown";
+        string versionStr = version != null ? $"{version.Major}.{version.Minor}.{version.Build}" : "Unknown";
         AssemblyCompanyAttribute? companyAttr = assembly.GetCustomAttribute<AssemblyCompanyAttribute>();
-        var message = $"Mario Kart DS ARM9 Editor\nVersion: {versionStr}\n\nEdit values in Mario Kart DS ARM9 files.\n\n";
+        string message = $"Mario Kart DS ARM9 Editor\nVersion: {versionStr}\n\nEdit values in Mario Kart DS ARM9 files.\n\n";
         if (companyAttr != null)
         {
             message += $"By: {companyAttr.Company}\n";

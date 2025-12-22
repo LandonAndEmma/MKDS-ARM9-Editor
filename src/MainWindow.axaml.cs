@@ -1,6 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using System.Diagnostics.CodeAnalysis;
 namespace ARM9Editor;
+
 public partial class MainWindow : Window
 {
     private MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
@@ -14,6 +16,7 @@ public partial class MainWindow : Window
         if (ViewModel != null)
         {
             ViewModel.Owner = this;
+            ViewModel.OnTabsNeedRefresh = RefreshTabs;
             ViewModel.PropertyChanged += (_, args) =>
             {
                 if (args.PropertyName == nameof(ViewModel.IsFileLoaded))
@@ -22,6 +25,10 @@ public partial class MainWindow : Window
                 }
             };
         }
+    }
+    private void RefreshTabs()
+    {
+        PopulateTabs();
     }
     private void PopulateTabs()
     {
@@ -61,6 +68,22 @@ public partial class MainWindow : Window
         if (ViewModel != null)
         {
             await ViewModel.SaveFileAsAsync();
+        }
+    }
+    [RequiresUnreferencedCode("Calls ARM9Editor.MainWindowViewModel.ExportChangesAsync")]
+    private async void OnExportChangesClick(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel != null)
+        {
+            await ViewModel.ExportChangesAsync();
+        }
+    }
+    [RequiresUnreferencedCode("Calls ARM9Editor.MainWindowViewModel.ImportChangesAsync")]
+    private async void OnImportChangesClick(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel != null)
+        {
+            await ViewModel.ImportChangesAsync();
         }
     }
     private async void OnInfoClick(object? sender, RoutedEventArgs e)

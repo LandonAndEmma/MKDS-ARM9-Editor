@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 namespace ARM9Editor;
+
 public sealed class EditorContent : UserControl
 {
     private readonly EditorTab _tabType;

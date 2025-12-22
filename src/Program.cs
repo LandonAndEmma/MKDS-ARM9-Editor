@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 namespace ARM9Editor;
+
 internal static class Program
 {
     [STAThread]

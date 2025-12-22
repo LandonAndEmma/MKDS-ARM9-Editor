@@ -1,12 +1,19 @@
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 namespace ARM9Editor;
+
 public sealed class FileService
 {
     private const int MinFileSize = 1024 * 1024;
     private static readonly FilePickerFileType BinaryFileType = new("Binary files")
     {
         Patterns = new[] { "*.bin" }
+    };
+    private static readonly FilePickerFileType JsonFileType = new("JSON files")
+    {
+        Patterns = new[] { "*.json" }
     };
     public static async Task<(byte[]? Data, string? Path)> OpenFileAsync(Window? owner)
     {
@@ -74,5 +81,67 @@ public sealed class FileService
             FileTypeChoices = new[] { BinaryFileType }
         });
         return file?.Path.LocalPath;
+    }
+    [RequiresUnreferencedCode("Calls Newtonsoft.Json.JsonConvert.SerializeObject")]
+    public static async Task<string?> ExportChangesAsync(Window? owner, ChangesExport changes)
+    {
+        if (owner?.StorageProvider == null)
+        {
+            return null;
+        }
+        IStorageFile? file = await owner.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "Export Changes To JSON",
+            DefaultExtension = "json",
+            SuggestedFileName = "arm9_changes.json",
+            FileTypeChoices = new[] { JsonFileType }
+        });
+        if (file == null)
+        {
+            return null;
+        }
+        try
+        {
+            string json = JsonConvert.SerializeObject(changes, Formatting.Indented);
+            await File.WriteAllTextAsync(file.Path.LocalPath, json);
+            return file.Path.LocalPath;
+        }
+        catch (Exception ex)
+        {
+            throw new IOException($"Failed to export changes: {ex.Message}", ex);
+        }
+    }
+    [RequiresUnreferencedCode("Calls Newtonsoft.Json.JsonConvert.DeserializeObject")]
+    public static async Task<ChangesExport?> ImportChangesAsync(Window? owner)
+    {
+        if (owner?.StorageProvider == null)
+        {
+            return null;
+        }
+        IReadOnlyList<IStorageFile> files = await owner.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Import Changes From JSON",
+            AllowMultiple = false,
+            FileTypeFilter = new[] { JsonFileType }
+        });
+        if (files.Count == 0)
+        {
+            return null;
+        }
+        IStorageFile file = files[0];
+        try
+        {
+            string json = await File.ReadAllTextAsync(file.Path.LocalPath);
+            ChangesExport? changes = JsonConvert.DeserializeObject<ChangesExport>(json);
+            return changes ?? throw new InvalidDataException("Invalid JSON format.");
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidDataException($"Failed to parse JSON: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new IOException($"Failed to import changes: {ex.Message}", ex);
+        }
     }
 }

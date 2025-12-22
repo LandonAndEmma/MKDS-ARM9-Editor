@@ -14,6 +14,9 @@
                 <MenuItem Header="Open" Click="OnOpenClick" />
                 <MenuItem Header="Save" Click="OnSaveClick" IsEnabled="{Binding IsFileLoaded}" />
                 <MenuItem Header="Save As..." Click="OnSaveAsClick" IsEnabled="{Binding IsFileLoaded}" />
+                <Separator />
+                <MenuItem Header="Export Changes To..." Click="OnExportChangesClick" IsEnabled="{Binding IsFileLoaded}" />
+                <MenuItem Header="Import Changes From..." Click="OnImportChangesClick" IsEnabled="{Binding IsFileLoaded}" />
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="Info" Click="OnInfoClick" />

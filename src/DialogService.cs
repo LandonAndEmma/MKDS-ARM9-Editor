@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 namespace ARM9Editor;
+
 public static class DialogService
 {
     public static async Task ShowErrorAsync(Window? owner, string message)
